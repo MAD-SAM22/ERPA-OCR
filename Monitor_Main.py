@@ -5,17 +5,18 @@ from subprocess import call
 import os
 import sys
 from dotenv import load_dotenv,dotenv_values
-import docx
+from docx import Document
+
 
 from Extractor import OCR
 
 start_time = time.time()
 
 def open_by_file_source(script_path, src_path):
-    call(["python", script_path, src_path])
+    call([sys.executable, script_path, src_path])
 
 def open_by_file(script_path, src_path):
-    call(["python", script_path, src_path])
+    call([sys.executable, script_path, src_path])
 
 def do_myocr(img_path):
     image_path = rf"{img_path}"

@@ -1,5 +1,7 @@
 import json
 import os
+import sys
+import docx
 from docx import Document
 import sys
 
