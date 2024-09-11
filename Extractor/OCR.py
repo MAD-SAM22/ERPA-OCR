@@ -64,20 +64,22 @@ class Gemini:
         return response.text
 
 # Example usage
-image_path = rf"C:\Users\Osama hosam\Desktop\gg\OCR+FormatFilling\OCR+FormatFilling\imgs\rr.png"
 
-api_key = os.getenv("api_key")  # Replace with your API key
 
-# Create an instance of Gemini
-gemini_instance = Gemini(api_key)
+# image_path = rf"C:\Users\Osama hosam\Desktop\gg\OCR+FormatFilling\OCR+FormatFilling\imgs\rr.png"
 
-# Create an instance of EasyOcr
-easyocr_instance = EasyOcr()
+# api_key = os.getenv("api_key")  # Replace with your API key
 
-# Apply OCR to the image
-extracted_text = easyocr_instance.apply_ocr(image_path)
+# # Create an instance of Gemini
+# gemini_instance = Gemini(api_key)
 
-# Generate response from Gemini model
-response_text = gemini_instance.generate_response(extracted_text)
+# # Create an instance of EasyOcr
+# easyocr_instance = EasyOcr()
 
-print(response_text)
+# # Apply OCR to the image
+# extracted_text = easyocr_instance.apply_ocr(image_path)
+
+# # Generate response from Gemini model
+# response_text = gemini_instance.generate_response(extracted_text)
+
+# print(response_text)

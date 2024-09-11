@@ -1,6 +1,7 @@
 import csv
 import os
 import sys
+
 # Function to append data to the last empty row of a CSV file
 def append_json_to_csv(json_data, csv_file):
     # Create directory if it does not exist
@@ -61,6 +62,6 @@ def append_json_to_csv(json_data, csv_file):
 # Example usage
 json_file = rf'{sys.argv[1]}'
 
-csv_file = rf'C:\\Users\\Osama hosam\\Desktop\\gg\\OCR+FormatFilling\\OCR+FormatFilling\\CSV_fill\\data.csv'  # Specify folder in the path
+csv_file = rf'C:\Users\Osama hosam\Desktop\gg\OCR+FormatFilling\OCR+FormatFilling\CSV_fill\data.csv'  # Specify folder in the path
 
 append_json_to_csv(json_file, csv_file)
