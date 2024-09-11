@@ -5,6 +5,7 @@ from subprocess import call
 import os
 import sys
 from dotenv import load_dotenv,dotenv_values
+import docx
 
 from Extractor import OCR
 

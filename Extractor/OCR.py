@@ -66,20 +66,20 @@ class Gemini:
 # Example usage
 
 
-# image_path = rf"C:\Users\Osama hosam\Desktop\gg\OCR+FormatFilling\OCR+FormatFilling\imgs\rr.png"
+image_path = rf"C:\Users\Osama hosam\Desktop\gg\OCR+FormatFilling\OCR+FormatFilling\imgs\rr.png"
 
-# api_key = os.getenv("api_key")  # Replace with your API key
+api_key = os.getenv("api_key")  # Replace with your API key
 
 # # Create an instance of Gemini
-# gemini_instance = Gemini(api_key)
+gemini_instance = Gemini(api_key)
 
-# # Create an instance of EasyOcr
-# easyocr_instance = EasyOcr()
+ # Create an instance of EasyOcr
+easyocr_instance = EasyOcr()
 
 # # Apply OCR to the image
-# extracted_text = easyocr_instance.apply_ocr(image_path)
+extracted_text = easyocr_instance.apply_ocr(image_path)
 
 # # Generate response from Gemini model
-# response_text = gemini_instance.generate_response(extracted_text)
+response_text = gemini_instance.generate_response(extracted_text)
 
-# print(response_text)
+print(response_text)

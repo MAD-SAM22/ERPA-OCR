@@ -1,6 +1,7 @@
 import csv
 import os
 import sys
+import json 
 
 # Function to append data to the last empty row of a CSV file
 def append_json_to_csv(json_data, csv_file):
@@ -8,14 +9,16 @@ def append_json_to_csv(json_data, csv_file):
     directory = os.path.dirname(csv_file)
     if directory and not os.path.exists(directory):
         os.makedirs(directory)
+    
+    json_dict = json.loads(json_data)
 
     # Open CSV file in append mode
     with open(csv_file, 'a+', newline='') as cfile:
         # Extract the 'invoice' and 'subtotal' keys for CSV rows
-        invoice_data = json_data.get('invoice', {})
-        items_data = json_data.get('items', [])
-        subtotal_data = json_data.get('subtotal', {})
-        payment_data = json_data.get('payment_instructions', {})
+        invoice_data = json_dict.get('invoice', {})
+        items_data = json_dict.get('items', [])
+        subtotal_data = json_dict.get('subtotal', {})
+        payment_data = json_dict.get('payment_instructions', {})
 
         # Replace None (null) values with empty strings in each dictionary
         invoice_data = {k: (v if v is not None else '') for k, v in invoice_data.items()}
