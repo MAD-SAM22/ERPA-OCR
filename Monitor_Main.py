@@ -41,7 +41,7 @@ class MyHandler(FileSystemEventHandler):
         time_now = time.time()
 
         open_by_file(r"..\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
-        open_by_file(r"..\CSV_fill\jcsv.py",extracted_text)
+        open_by_file(r"..\OCR-RPA\CSV_fill\jcsv.py",extracted_text)
 
         print("second file" ,time.time() - time_now)
         print("total:",time.time()-start_time)

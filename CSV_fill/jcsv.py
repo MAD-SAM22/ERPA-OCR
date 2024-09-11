@@ -62,6 +62,6 @@ def append_json_to_csv(json_data, csv_file):
 # Example usage
 json_file = rf'{sys.argv[1]}'
 
-csv_file = rf'C:\Users\Osama hosam\Desktop\gg\OCR+FormatFilling\OCR+FormatFilling\CSV_fill\data.csv'  # Specify folder in the path
+csv_file = rf'..\CSV_fill\data.csv'
 
 append_json_to_csv(json_file, csv_file)
