@@ -79,8 +79,8 @@ def create_invoice_doc(json_data_str, directory):
     print(f"Invoice document created successfully: {filename}")
 
 # Sample JSON data as string
-json_data_str = rf'{sys.argv[1]}'
+json_data_str = '{ "name":"John", "age":30, "city":"New York"}' #rf'{sys.argv[1]}'
 
 # Call the function to create the document with the JSON data string
-YOUR_FOLDER_PATH=rf"C:\\Users\\Osama hosam\\Desktop\\gg\\OCR+FormatFilling\\OCR+FormatFilling\\Document_fill\\outputs"
+YOUR_FOLDER_PATH=rf"..\OCR-RPA\Document_fill\outputs"
 create_invoice_doc(json_data_str,YOUR_FOLDER_PATH)

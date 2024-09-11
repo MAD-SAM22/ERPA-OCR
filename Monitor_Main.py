@@ -40,15 +40,15 @@ class MyHandler(FileSystemEventHandler):
         print("first file" ,time.time() - time_now)
         time_now = time.time()
 
-        open_by_file(r"C:\Users\Osama hosam\Documents\GitHub\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
-        open_by_file(r"C:\Users\Osama hosam\Documents\GitHub\OCR-RPA\CSV_fill\jcsv.py",extracted_text)
+        open_by_file(r"..\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
+        open_by_file(r"..\CSV_fill\jcsv.py",extracted_text)
 
         print("second file" ,time.time() - time_now)
         print("total:",time.time()-start_time)
 
 
 if __name__ == "__main__":
-    path = r"C:\Users\Osama hosam\Documents\GitHub\OCR-RPA\imgs"  # Folder to monitor
+    path = r"..\OCR-RPA\imgs"  # Folder to monitor
     event_handler = MyHandler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
