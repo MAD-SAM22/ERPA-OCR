@@ -50,7 +50,7 @@ class Gemini:
             """
             You are given extracted text from an invoice, extract the data and return them in the following order:
             invoice object with client name, invoice number, invoice date, due date. 
-            Item purchased objects with their description, quantity, and total price.
+            items objects with their description, quantity, and total price.
             subtotal object with tax(if applicable), discount(if applicable), and total.
             Payment instructions with due date, bank name, account number, and payment method.
             in JSON format for direct use without any extra text. 
@@ -61,6 +61,7 @@ class Gemini:
 
     def generate_response(self, extracted_text):
         response = self.model.generate_content(f'{extracted_text}')
+        print(response.text)
         return response.text
 
 # Example usage

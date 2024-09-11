@@ -3,8 +3,6 @@ import os
 import sys
 import docx
 from docx import Document
-import sys
-
 # Function to count the number of .docx files in the directory
 def count_existing_docs(directory):
     # List all files in the directory
