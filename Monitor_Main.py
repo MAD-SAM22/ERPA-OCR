@@ -23,10 +23,18 @@ def do_myocr(img_path):
     api_key = os.getenv("api_key")  # Replace with your API key
     # Create an instance of Gemini
     OCR.gemini_instance = OCR.Gemini(api_key)
-    # Create an instance of EasyOcr
+    # Create an instance of EasyOcr and Apply it
     OCR.easyocr_instance = OCR.EasyOcr()
-    # Apply OCR to the image
     OCR.extracted_text = OCR.easyocr_instance.apply_ocr(image_path)
+    
+    # # Create an instance of Doctor OCR
+    # OCR.DoctrOCR_instance = OCR.DoctrOCR()
+    # OCR.extracted_text =OCR.DoctrOCR_instance.apply_ocr(image_path)
+
+    # # Create an instance of SuryaOcr OCR
+    # OCR.SuryaOcr_instance = OCR.SuryaOcr()
+    # OCR.extracted_text =OCR.SuryaOcr_instance.apply_ocr(image_path)
+
     # Generate response from Gemini model
     response_text = OCR.gemini_instance.generate_response(OCR.extracted_text)
     return response_text

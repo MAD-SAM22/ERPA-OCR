@@ -7,7 +7,9 @@ import google.generativeai as genai
 import sys 
 import os 
 from dotenv import load_dotenv,dotenv_values
-
+from doctr.models import ocr_predictor
+from doctr.io import DocumentFile
+from surya_ocr import SuryaOCR  # This line depends on the actual Surya OCR import method
 
 class EasyOcr:
     def __init__(self):
@@ -23,6 +25,32 @@ class EasyOcr:
             raise FileNotFoundError(f"Image not found: {image_path}")
         text = self.reader.readtext(image_path)
         return text
+
+class DoctrOCR:
+    def __init__(self):
+        # Initialize Doctr OCR model
+        self.model = ocr_predictor(pretrained=True)
+
+    def apply_ocr(self, image_path):
+        # Read the image using Doctr's document reader
+        doc = DocumentFile.from_images(image_path)
+        result = self.model(doc)
+        return result
+
+class SuryaOcr:
+    def __init__(self):
+        # Initialize Surya OCR model (Assumed it's imported correctly)
+        self.model = SuryaOCR()
+
+    def apply_ocr(self, image_path):
+        # Read the image using Surya OCR and apply OCR
+        image = cv2.imread(image_path)
+        if image is None:
+            raise FileNotFoundError(f"Image not found: {image_path}")
+        
+        # Assuming Surya OCR's API accepts the image directly
+        result = self.model.extract_text(image)
+        return result
 
 class Tesseract:
     def __init__(self ):
