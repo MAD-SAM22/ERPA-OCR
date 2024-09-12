@@ -10,6 +10,9 @@ import os
 from dotenv import load_dotenv, dotenv_values
 from doctr.models import ocr_predictor
 from doctr.io import DocumentFile
+import time
+
+
 
 class EasyOcr:
     def __init__(self):
@@ -21,9 +24,12 @@ class EasyOcr:
 
     def apply_ocr(self, image_path):
         image = cv2.imread(image_path)
+        text = ''
         if image is None:
             raise FileNotFoundError(f"Image not found: {image_path}")
-        text = self.reader.readtext(image_path)
+        result = self.reader.readtext(image_path)
+        for item in result:
+            text += ' '+item[1]
         return text
 
 class DoctrOCR:
@@ -38,7 +44,7 @@ class DoctrOCR:
         return result
 
 
-class PaddleOCR:
+class Paddle_OCR:
     def __init__(self):
         # Initialize PaddleOCR
         self.ocr = PaddleOCR(use_angle_cls=True, lang='en')  # Set lang to 'ch' for Chinese, 'en' for English
@@ -57,7 +63,7 @@ class PaddleOCR:
         text = "\n".join([line[1][0] for line in result[0]])
         return text
 
-class Tesseract:
+class TesseractOCR:
     def __init__(self ):
         # Set up Tesseract executable
         pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
@@ -90,11 +96,13 @@ class Gemini:
             additionally, dont write json before the text 
             """
         )
-        self.model = genai.GenerativeModel("models/gemini-1.5-pro", system_instruction=self.instruction)
+        self.model = genai.GenerativeModel("models/gemini-1.5-flash", system_instruction=self.instruction)
 
     def generate_response(self, extracted_text):
+        print(extracted_text)
         response = self.model.generate_content(f'{extracted_text}')
         print(response.text)
+        time.sleep(10)
         return response.text
 
 # Example usage

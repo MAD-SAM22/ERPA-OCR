@@ -34,12 +34,12 @@ def do_myocr(img_path , ocr_model):
         OCR.extracted_text =OCR.DoctrOCR_instance.apply_ocr(image_path)
     elif(ocr_model==3):
         # Create an instance of SuryaOcr OCR
-        OCR.TextractOCR_instance = OCR.TextractOCR()
-        OCR.TextractOCR_text =OCR.TextractOCR_instance.apply_ocr(image_path)
+        OCR.TesseractOCR_instance = OCR.TesseractOCR()
+        OCR.extracted_text =OCR.TesseractOCR_instance.apply_ocr(image_path)
     else:
         # Create an instance of Paddle OCR
-        OCR.PaddleOCR_instance = OCR.PaddleOCR()
-        OCR.PaddleOCR_text =OCR.PaddleOCR_instance.apply_ocr(image_path)
+        OCR.PaddleOCR_instance = OCR.Paddle_OCR()
+        OCR.extracted_text =OCR.PaddleOCR_instance.apply_ocr(image_path)
 
     # Generate response from Gemini model
     response_text = OCR.gemini_instance.generate_response(OCR.extracted_text)
@@ -51,7 +51,7 @@ class MyHandler(FileSystemEventHandler):
         print(f'File created: {event.src_path}')
         time_now = time.time()
 
-        extracted_text=do_myocr(event.src_path , 1)
+        extracted_text=do_myocr(event.src_path , 4)
         
         print("first file" ,time.time() - time_now)
         time_now = time.time()
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
-
+    print("monitoring...")
     try:
          while True:
              time.sleep(1)
