@@ -1,0 +1,4 @@
+client_name,invoice_number,invoice_date,due_date,item_description,item_quantity,item_total_price,tax,discount,total,payment_due_date,bank_name,account_number,payment_method
+Alferd Griner Packer,CA-001,29/01/2019,26/0412019,Smoked chinook salmon fillet,,100.00,7.25,,S152.25,within 15 days,,,cheques payable to: Yukon Packing
+Alferd Griner Packer,CA-001,29/01/2019,26/0412019,Maple bacon doughnuts,,30.00,7.25,,S152.25,within 15 days,,,cheques payable to: Yukon Packing
+Alferd Griner Packer,CA-001,29/01/2019,26/0412019,Pouline curds,,15.00,7.25,,S152.25,within 15 days,,,cheques payable to: Yukon Packing

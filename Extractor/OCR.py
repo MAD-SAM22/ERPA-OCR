@@ -2,14 +2,14 @@ import cv2
 import pytesseract
 import numpy as np
 import easyocr
+from paddleocr import PaddleOCR
 from PIL import Image
 import google.generativeai as genai
 import sys 
 import os 
-from dotenv import load_dotenv,dotenv_values
+from dotenv import load_dotenv, dotenv_values
 from doctr.models import ocr_predictor
 from doctr.io import DocumentFile
-from surya_ocr import SuryaOCR  # This line depends on the actual Surya OCR import method
 
 class EasyOcr:
     def __init__(self):
@@ -37,20 +37,25 @@ class DoctrOCR:
         result = self.model(doc)
         return result
 
-class SuryaOcr:
+
+class PaddleOCR:
     def __init__(self):
-        # Initialize Surya OCR model (Assumed it's imported correctly)
-        self.model = SuryaOCR()
+        # Initialize PaddleOCR
+        self.ocr = PaddleOCR(use_angle_cls=True, lang='en')  # Set lang to 'ch' for Chinese, 'en' for English
 
     def apply_ocr(self, image_path):
-        # Read the image using Surya OCR and apply OCR
+        # Read the image using OpenCV
         image = cv2.imread(image_path)
         if image is None:
             raise FileNotFoundError(f"Image not found: {image_path}")
+
+        # Convert image to RGB for PaddleOCR
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         
-        # Assuming Surya OCR's API accepts the image directly
-        result = self.model.extract_text(image)
-        return result
+        # Apply OCR
+        result = self.ocr.ocr(image_rgb, cls=True)
+        text = "\n".join([line[1][0] for line in result[0]])
+        return text
 
 class Tesseract:
     def __init__(self ):

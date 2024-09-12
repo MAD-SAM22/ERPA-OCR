@@ -1,7 +1,7 @@
 import csv
 import os
+import json
 import sys
-import json 
 
 # Function to append data to the last empty row of a CSV file
 def append_json_to_csv(json_data, csv_file):
@@ -9,11 +9,40 @@ def append_json_to_csv(json_data, csv_file):
     directory = os.path.dirname(csv_file)
     if directory and not os.path.exists(directory):
         os.makedirs(directory)
-    
-    json_dict = json.loads(json_data)
 
-    # Open CSV file in append mode
+    # Check if json_data is a string or a dictionary
+    if isinstance(json_data, str):
+        try:
+            json_dict = json.loads(json_data)
+        except json.JSONDecodeError:
+            print("Error: The provided string is not valid JSON.")
+            return
+    elif isinstance(json_data, dict):
+        json_dict = json_data
+    else:
+        print("Error: The input data is neither a JSON string nor a dictionary.")
+        return
+
+    # Open CSV file in append mode and create if it does not exist
+    file_exists = os.path.isfile(csv_file)
     with open(csv_file, 'a+', newline='') as cfile:
+        # Move to the start of the file to check if it's empty or not
+        cfile.seek(0)
+        reader = csv.DictReader(cfile)
+        
+        # Define fieldnames for CSV based on the structure of JSON
+        fieldnames = ['client_name', 'invoice_number', 'invoice_date', 'due_date',
+                      'item_description', 'item_quantity', 'item_total_price',
+                      'tax', 'discount', 'total', 'payment_due_date', 'bank_name', 'account_number', 'payment_method']
+
+        # If the CSV is empty and does not exist, write the headers
+        if not file_exists or not reader.fieldnames:
+            writer = csv.DictWriter(cfile, fieldnames=fieldnames)
+            writer.writeheader()
+            print("Created new CSV with headers.")
+        else:
+            writer = csv.DictWriter(cfile, fieldnames=fieldnames)
+
         # Extract the 'invoice' and 'subtotal' keys for CSV rows
         invoice_data = json_dict.get('invoice', {})
         items_data = json_dict.get('items', [])
@@ -21,29 +50,13 @@ def append_json_to_csv(json_data, csv_file):
         payment_data = json_dict.get('payment_instructions', {})
 
         # Replace None (null) values with empty strings in each dictionary
-        invoice_data = {k: (v if v is not None else '') for k, v in invoice_data.items()}
-        subtotal_data = {k: (v if v is not None else '') for k, v in subtotal_data.items()}
-        payment_data = {k: (v if v is not None else '') for k, v in payment_data.items()}
-
-        # Define fieldnames for CSV based on the structure of JSON
-        fieldnames = ['client_name', 'invoice_number', 'invoice_date', 'due_date',
-                      'item_description', 'item_quantity', 'item_total_price',
-                      'tax', 'discount', 'total', 'payment_due_date', 'bank_name', 'account_number', 'payment_method']
-
-        # Move to the start of the file to check if it's empty or not
-        cfile.seek(0)
-        reader = csv.DictReader(cfile)
-
-        # If the CSV is empty, write the headers
-        if not reader.fieldnames:
-            writer = csv.DictWriter(cfile, fieldnames=fieldnames)
-            writer.writeheader()
-
-        writer = csv.DictWriter(cfile, fieldnames=fieldnames)
+        invoice_data = {k: (v if v is not None and v != 'null' else '') for k, v in invoice_data.items()}
+        subtotal_data = {k: (v if v is not None and v != 'null' else '') for k, v in subtotal_data.items()}
+        payment_data = {k: (v if v is not None and v != 'null' else '') for k, v in payment_data.items()}
 
         # Write each item in 'items' array as a separate row
         for item in items_data:
-            item = {k: (v if v is not None else '') for k, v in item.items()}  # Replace None with empty string
+            item = {k: (v if v is not None and v != 'null' else '') for k, v in item.items()}  # Replace None or 'null' with empty string
             row = {
                 'client_name': invoice_data.get('client_name', ''),
                 'invoice_number': invoice_data.get('invoice_number', ''),
@@ -65,6 +78,6 @@ def append_json_to_csv(json_data, csv_file):
 # Example usage
 json_file = rf'{sys.argv[1]}'
 
-csv_file = rf'..\CSV_fill\data.csv'
+csv_file = r'.\\CSV_fill\\data.csv'
 
-append_json_to_csv(json_file, csv_file)
+append_json_to_csv(json_data, csv_file)
