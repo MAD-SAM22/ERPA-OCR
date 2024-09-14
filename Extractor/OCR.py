@@ -102,7 +102,7 @@ class Gemini:
         print(extracted_text)
         response = self.model.generate_content(f'{extracted_text}')
         print(response.text)
-        time.sleep(10)
+        time.sleep(5)
         return response.text
 
 # Example usage

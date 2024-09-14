@@ -6,7 +6,7 @@ import os
 import sys
 from dotenv import load_dotenv,dotenv_values
 from docx import Document
-
+from pdf2image import convert_from_path
 
 from Extractor import OCR
 
@@ -20,6 +20,7 @@ def open_by_file(script_path, src_path):
 
 def do_myocr(img_path , ocr_model):
     image_path = rf"{img_path}"
+
     api_key = os.getenv("api_key")  # Replace with your API key
     # Create an instance of Gemini
     OCR.gemini_instance = OCR.Gemini(api_key)
@@ -50,17 +51,19 @@ class MyHandler(FileSystemEventHandler):
     def on_created(self, event):
         print(f'File created: {event.src_path}')
         time_now = time.time()
+        try:
+            extracted_text=do_myocr(event.src_path , 2)
+            print("first file" ,time.time() - time_now)
+            open_by_file(rf"..\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
+            open_by_file(rf"..\OCR-RPA\CSV_fill\jcsv.py",extracted_text)
 
-        extracted_text=do_myocr(event.src_path , 4)
-        
-        print("first file" ,time.time() - time_now)
+            print("second file" ,time.time() - time_now)
+            print("total:",time.time()-start_time)
+        except:
+            print('skipped')
         time_now = time.time()
 
-        open_by_file(rf"..\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
-        open_by_file(rf"..\OCR-RPA\CSV_fill\jcsv.py",extracted_text)
-
-        print("second file" ,time.time() - time_now)
-        print("total:",time.time()-start_time)
+      
 
 
 if __name__ == "__main__":

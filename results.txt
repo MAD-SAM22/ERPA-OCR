@@ -1,0 +1,4 @@
+program: python engine: doctr
+1230 files : 15700 sec - 6155 sec  = 9548 sec
+1 file = avg(12.7 sec) - 5 sec (sleep for Api requests)
+
