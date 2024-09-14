@@ -56,12 +56,11 @@ class MyHandler(FileSystemEventHandler):
             print("first file" ,time.time() - time_now)
             open_by_file(rf"..\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
             open_by_file(rf"..\OCR-RPA\CSV_fill\jcsv.py",extracted_text)
-
+            time_now = time.time()
             print("second file" ,time.time() - time_now)
             print("total:",time.time()-start_time)
         except:
             print('skipped')
-        time_now = time.time()
 
       
 
