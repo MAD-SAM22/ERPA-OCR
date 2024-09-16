@@ -10,6 +10,7 @@ from pdf2image import convert_from_path
 
 from Extractor import OCR
 
+
 start_time = time.time()
 
 def open_by_file_source(script_path, src_path):
@@ -52,15 +53,15 @@ class MyHandler(FileSystemEventHandler):
         print(f'File created: {event.src_path}')
         time_now = time.time()
         try:
-            extracted_text=do_myocr(event.src_path , 2)
+            extracted_text=do_myocr(event.src_path , 3)
             print("first file" ,time.time() - time_now)
+            time_now = time.time()
             open_by_file(rf"..\OCR-RPA\Document_fill\json_to_doc.py",extracted_text)
             open_by_file(rf"..\OCR-RPA\CSV_fill\jcsv.py",extracted_text)
-            time_now = time.time()
             print("second file" ,time.time() - time_now)
             print("total:",time.time()-start_time)
-        except:
-            print('skipped')
+        except Exception as e:
+            print(e)
 
       
 
