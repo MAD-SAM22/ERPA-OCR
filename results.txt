@@ -10,3 +10,8 @@ program: python engine: tesseract
 1 file = avg(9.8) - 5 sec (sleep for Api requests)
 1369 out of 1489 : 12845 - 6845 = 6000 sec
 1 file = avg(9.4) - 5 sec (sleep for Api requests)
+
+program: uipath : tesseract
+starttime: 23:37:08
+end: 01:39:16
+401 images

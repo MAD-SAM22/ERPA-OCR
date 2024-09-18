@@ -23,7 +23,7 @@ def open_by_file(script_path, src_path):
 def do_myocr(img_path , ocr_model):
     image_path = rf"{img_path}"
 
-    api_key = os.getenv("api_key_3")  # Replace with your API key
+    api_key = os.getenv("api_key_2")  # Replace with your API key
     # Create an instance of Gemini
     OCR.gemini_instance = OCR.Gemini(api_key)
 
@@ -48,8 +48,14 @@ def do_myocr(img_path , ocr_model):
     response_text = OCR.gemini_instance.generate_response(OCR.extracted_text)
     return response_text    
 
-if __name__ == "__main__":
-    file_path = sys.argv[1]
-    extracted_text=do_myocr(file_path , 3)
-    open_by_file(rf"D:\Grad\OCR-RPA\Document_fill\json_to_doc_ui.py",extracted_text)
-    open_by_file(rf"D:\Grad\OCR-RPA\CSV_fill\jcsv_ui.py",extracted_text)
+def main():
+    try:
+        file_path = sys.argv[1]
+        extracted_text=do_myocr(file_path , 3)
+        open_by_file(rf"D:\Grad\OCR-RPA\Document_fill\json_to_doc_ui.py",extracted_text)
+        open_by_file(rf"D:\Grad\OCR-RPA\CSV_fill\jcsv_ui.py",extracted_text)
+        return f"total:,{time.time()-start_time}"
+    except Exception as e:
+        return 'skipped'
+
+print(main())
