@@ -1,7 +1,7 @@
 .venv
 .env
-\imgs
 \outputs
+\imgs
 \outputs_Doctr_batch1
 \outputs_Doctr_batch2
 \outputs_tesseract_batch1
