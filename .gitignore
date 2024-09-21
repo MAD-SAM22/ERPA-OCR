@@ -1,2 +1,8 @@
 .venv
 .env
+\imgs
+\outputs
+\outputs_Doctr_batch1
+\outputs_Doctr_batch2
+\outputs_tesseract_batch1
+\outputs_tesseract_batch2

@@ -80,4 +80,4 @@ json_file = rf'{sys.argv[1]}'
 
 csv_file = r'.\\CSV_fill\\data.csv'
 
-append_json_to_csv(json_data, csv_file)
+append_json_to_csv(json_file, csv_file)
