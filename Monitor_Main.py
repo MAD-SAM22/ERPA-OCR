@@ -45,12 +45,12 @@ def do_myocr(img_path, ocr_model):
                 OCR.DoctrOCR_instance = OCR.DoctrOCR()
                 OCR.extracted_text = OCR.DoctrOCR_instance.apply_ocr(image_path)
             elif ocr_model == 3:
-                # Create an instance of TextRact OCR
-                OCR.TextractOCR_instance = OCR.TextractOCR()
-                OCR.extracted_text = OCR.TextractOCR_instance.apply_ocr(image_path)
+                # Create an instance of Tesseract OCR
+                OCR.TesseractOCR_instance = OCR.TesseractOCR()
+                OCR.extracted_text = OCR.TesseractOCR_instance.apply_ocr(image_path)
             else:
                 # Create an instance of Paddle OCR
-                OCR.PaddleOCR_instance = OCR.PaddleOCR()
+                OCR.PaddleOCR_instance = OCR.Paddle_OCR()
                 OCR.extracted_text = OCR.PaddleOCR_instance.apply_ocr(image_path)
 
             # Generate response from Gemini model
