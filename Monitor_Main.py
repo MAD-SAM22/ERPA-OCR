@@ -53,14 +53,14 @@ def do_myocr(img_path, ocr_model):
                 OCR.PaddleOCR_instance = OCR.Paddle_OCR()
                 OCR.extracted_text = OCR.PaddleOCR_instance.apply_ocr(image_path)
 
-            # Generate response from Gemini model
-            response_text = OCR.gemini_instance.generate_response(OCR.extracted_text)
-            return response_text
-
-        except Exception as e:
-            print(f"Error with API key {api_key}: {e}")
-            print("Switching to the next API key...")
-            # The loop will continue and try the next key from the list
+            try:
+                # Generate response from Gemini model
+                response_text = OCR.gemini_instance.generate_response(OCR.extracted_text)
+                return response_text
+            except Exception as e:
+                # Handle errors specifically from the Gemini API call
+                print(f"Error with Gemini API using key {api_key}: {e}")
+                raise  
 
 
 class MyHandler(FileSystemEventHandler):
