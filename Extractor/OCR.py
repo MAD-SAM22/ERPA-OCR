@@ -2,7 +2,6 @@ import cv2
 import pytesseract
 import numpy as np
 import easyocr
-from paddleocr import PaddleOCR
 from PIL import Image
 import google.generativeai as genai
 import sys 
@@ -10,6 +9,7 @@ import os
 from dotenv import load_dotenv, dotenv_values
 from doctr.models import ocr_predictor
 from doctr.io import DocumentFile
+from paddleocr import PaddleOCR
 import time
 
 
