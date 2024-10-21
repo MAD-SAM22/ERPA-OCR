@@ -50,30 +50,37 @@ def append_json_to_csv(json_data, csv_file):
         payment_data = json_dict.get('payment_instructions', {})
 
         # Replace None (null) values with empty strings in each dictionary
-        invoice_data = {k: (v if v is not None and v != 'null' else '') for k, v in invoice_data.items()}
-        subtotal_data = {k: (v if v is not None and v != 'null' else '') for k, v in subtotal_data.items()}
-        payment_data = {k: (v if v is not None and v != 'null' else '') for k, v in payment_data.items()}
+        if invoice_data:
+            invoice_data = {k: (v if v is not None and v != 'null' else '') for k, v in invoice_data.items()}
+        if subtotal_data:
+            subtotal_data = {k: (v if v is not None and v != 'null' else '') for k, v in subtotal_data.items()}
+        if payment_data:
+            payment_data = {k: (v if v is not None and v != 'null' else '') for k, v in payment_data.items()}
 
         # Write each item in 'items' array as a separate row
         for item in items_data:
-            item = {k: (v if v is not None and v != 'null' else '') for k, v in item.items()}  # Replace None or 'null' with empty string
-            row = {
-                'client_name': invoice_data.get('client_name', ''),
-                'invoice_number': invoice_data.get('invoice_number', ''),
-                'invoice_date': invoice_data.get('invoice_date', ''),
-                'due_date': invoice_data.get('due_date', ''),
-                'item_description': item.get('description', ''),
-                'item_quantity': item.get('quantity', ''),
-                'item_total_price': item.get('total_price', ''),
-                'tax': subtotal_data.get('tax', ''),
-                'discount': subtotal_data.get('discount', ''),
-                'total': subtotal_data.get('total', ''),
-                'payment_due_date': payment_data.get('due_date', ''),
-                'bank_name': payment_data.get('bank_name', ''),
-                'account_number': payment_data.get('account_number', ''),
-                'payment_method': payment_data.get('payment_method', '')
-            }
-            writer.writerow(row)
+            if item:
+                item = {k: (v if v is not None and v != 'null' else '') for k, v in item.items()}  # Replace None or 'null' with empty string
+                row = {}
+                if invoice_data:
+                    row['client_name'] = invoice_data.get('client_name', ''),
+                    row['invoice_number'] = invoice_data.get('invoice_number', ''),
+                    row['invoice_date'] = invoice_data.get('invoice_date', ''),
+                    row['due_date'] = invoice_data.get('due_date', ''),
+                row['item_description'] = item.get('description', ''),
+                row['item_quantity'] = item.get('quantity', ''),
+                row['item_total_price'] = item.get('total_price', ''),
+                if subtotal_data:
+                    row['tax'] = subtotal_data.get('tax', ''),
+                    row['discount'] = subtotal_data.get('discount', ''),
+                    row['total'] = subtotal_data.get('total', ''),
+                if payment_data:
+                    row['payment_due_date'] = payment_data.get('due_date', ''),
+                    row['bank_name'] = payment_data.get('bank_name', ''),
+                    row['account_number'] = payment_data.get('account_number', ''),
+                    row['payment_method'] = payment_data.get('payment_method', '')
+                
+                writer.writerow(row)
 
 # Example usage
 json_file = rf'{sys.argv[1]}'

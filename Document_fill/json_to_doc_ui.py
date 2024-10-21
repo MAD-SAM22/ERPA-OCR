@@ -18,7 +18,6 @@ def create_invoice_doc(json_data_str, directory):
     data = json.loads(json_data_str)
 
     document = Document()
-
     # Add invoice details
     invoice = data.get("invoice", {})
     if invoice.get("client_name"):
@@ -33,39 +32,41 @@ def create_invoice_doc(json_data_str, directory):
     # Add items with numbering
     document.add_heading("Items", level=2)
     items = data.get("items", [])
-    
-    for idx, item in enumerate(items, start=1):
-        document.add_paragraph(f"Item {idx}:")
-        if item.get("description"):
-            document.add_paragraph(f"  Description: {item['description']}")
-        if item.get("quantity"):
-            document.add_paragraph(f"  Quantity: {item['quantity']}")
-        if item.get("total_price"):
-            document.add_paragraph(f"  Total Price: {item['total_price']}")
-        document.add_paragraph(" ")
+    if items:
+        for idx, item in enumerate(items, start=1):
+            document.add_paragraph(f"Item {idx}:")
+            if item.get("description"):
+                document.add_paragraph(f"  Description: {item['description']}")
+            if item.get("quantity"):
+                document.add_paragraph(f"  Quantity: {item['quantity']}")
+            if item.get("total_price"):
+                document.add_paragraph(f"  Total Price: {item['total_price']}")
+            document.add_paragraph(" ")
 
     # Add subtotal details
     document.add_heading("Subtotal", level=2)
     subtotal = data.get("subtotal", {})
-    if subtotal.get("tax"):
-        document.add_paragraph(f"Tax: {subtotal['tax']}")
-    if subtotal.get("discount"):
-        document.add_paragraph(f"Discount: {subtotal['discount']}")
-    if subtotal.get("total"):
-        document.add_paragraph(f"Total: {subtotal['total']}")
+    if subtotal:
+        if subtotal.get("tax"):
+            document.add_paragraph(f"Tax: {subtotal['tax']}")
+        if subtotal.get("discount"):
+            document.add_paragraph(f"Discount: {subtotal['discount']}")
+        if subtotal.get("total"):
+            document.add_paragraph(f"Total: {subtotal['total']}")
 
     # Add payment instructions if any
     payment_instructions = data.get("payment_instructions", {})
-    if any(payment_instructions.values()):
-        document.add_heading("Payment Instructions", level=2)
-        if payment_instructions.get("due_date"):
-            document.add_paragraph(f"Payment Due Date: {payment_instructions['due_date']}")
-        if payment_instructions.get("bank_name"):
-            document.add_paragraph(f"Bank Name: {payment_instructions['bank_name']}")
-        if payment_instructions.get("account_number"):
-            document.add_paragraph(f"Account Number: {payment_instructions['account_number']}")
-        if payment_instructions.get("payment_method"):
-            document.add_paragraph(f"Payment Method: {payment_instructions['payment_method']}")
+    if payment_instructions:
+        if any(payment_instructions.values()):
+            document.add_heading("Payment Instructions", level=2)
+            if payment_instructions.get("due_date"):
+                document.add_paragraph(f"Payment Due Date: {payment_instructions['due_date']}")
+            if payment_instructions.get("bank_name"):
+                document.add_paragraph(f"Bank Name: {payment_instructions['bank_name']}")
+            if payment_instructions.get("account_number"):
+                document.add_paragraph(f"Account Number: {payment_instructions['account_number']}")
+            if payment_instructions.get("payment_method"):
+                document.add_paragraph(f"Payment Method: {payment_instructions['payment_method']}")
 
     # Count the existing .docx files in the directory
     doc_count = count_existing_docs(directory)

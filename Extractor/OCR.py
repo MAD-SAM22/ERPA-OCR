@@ -76,11 +76,11 @@ class TesseractOCR:
         opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
         return opening
     
-    def apply_ocr(self, image_path):
+    def apply_ocr(self, image_path,lang='eng'):
         preprocessed_image = self.preprocess_image(cv2.imread(image_path))
         pil_image = Image.fromarray(preprocessed_image)
         config = r'--oem 3 --psm 6'
-        extracted_text = pytesseract.image_to_string(pil_image, config=config)
+        extracted_text = pytesseract.image_to_string(pil_image, config=config,lang=lang)
         return extracted_text
 class Gemini:
     def __init__(self, api_key):
@@ -93,6 +93,25 @@ class Gemini:
             subtotal object with tax(if applicable), discount(if applicable), and total.
             Payment instructions with due date, bank name, account number, and payment method.
             in JSON format for direct use without any extra text. 
+            additionally, dont write json before the text 
+            """
+        )
+        self.model = genai.GenerativeModel("models/gemini-1.5-flash", system_instruction=self.instruction)
+
+    def generate_response(self, extracted_text):
+        print(extracted_text)
+        response = self.model.generate_content(f'{extracted_text}')
+        print(response.text)
+        time.sleep(5)
+        return response.text
+class Gemini_BID:
+    def __init__(self, api_key):
+        genai.configure(api_key=api_key)
+        self.instruction = (
+            """
+            You are given extracted text from a Brazilian ID, extract the data and return them in the following order:
+            nome,filiciao,data de expedicao,Naturalidade and Data de nascimento and CPF which is a number in the format xxx.xxx.xxx-xx .
+            in JSON format for direct use without any extra text and pay respect to the given letter case. 
             additionally, dont write json before the text 
             """
         )

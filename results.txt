@@ -3,7 +3,7 @@ program: python engine: doctr
 1 file = avg(12.7 sec) - 5 sec (sleep for Api requests)
 1391 out of 1489 : 17261 - 6955 = 10306 sec 
 1 file = avg(12.4) - 5 sec (sleep for Api requests)
-
+--------------------------------------------------------
 program: python engine: tesseract
 
 1473 out of 1489 : 14466 sec - 7365 sec =  7101 sec
@@ -11,7 +11,201 @@ program: python engine: tesseract
 1369 out of 1489 : 12845 - 6845 = 6000 sec
 1 file = avg(9.4) - 5 sec (sleep for Api requests)
 
+all numbers include sleep 
+
+---------------------------------------------------
 program: uipath : tesseract
 starttime: 23:37:08
 end: 01:39:16
 401 images
+7,328 sec
+18.2 avg 
+
+
+starttime : 22:06:37
+end time :  02:13:32
+800 images
+14815 seconds 
+18.5 sec avg
+
+starttime : 04:35:25
+end time : 05:40:10
+3,885 sec
+222 images
+17.5 avg
+
+
+05:48:16
+06:05:57
+1,061 seconds
+68 images
+16 avg
+
+total time for whole batch: 27089 sec
+
+tesseract batch 1 total avg : 18.1
+
+---------------------------------------------------
+tesseract uipath batch 2
+
+start time : 10:02:59
+end time :  10:25:35
+1,356 sec
+69 images
+
+start time :  10:39:27
+end time : 11:28:33
+2,946 sec
+170 images
+
+
+start time : 17:01:19
+end time : 17:10:42
+563 sec
+35 images
+
+start time : 17:44:17
+end time : 21:39:19
+14,125 sec
+769 images
+avg 18.3
+
+
+start time : 22:00:51
+end time : 00:15:27
+8,076 sec
+445 images
+avg 18.1
+
+
+total time for whole batch 27066
+
+avg time for batch : 18.2
+
+----------------------------------------
+doctr uipath batch 1
+
+star ttime : 16:54:08
+end time : 17:45:03
+124 images
+3,055 sec
+avg 24.6370967742
+
+
+starttime: 12:33:48
+endtime : 08:36:02
+28,934 sec
+1354 images
+avg time 21.3 
+
+total time: 31989 sec
+
+avg for whole batch 21.7 sec
+
+---------------------------------------------------
+
+doctr uipath batch 2
+
+start time: 11:35:14
+end time : 17:28:36
+21,202 sec
+1072 images 
+avg 20 sec
+
+start time : 18:19:12
+end time :  20:23:07
+7,435 sec
+350 images
+avg 22.9
+
+total time: 28637 sec
+
+avg for whole batch 20.13
+
+---------------------------------------------------
+
+automation anywhere doctr batch 1
+967 images
+23000 sec
+avg 24.2
+
+
+start time 3:32:43
+end time  4:17:57
+2,714 sec
+132 images
+avg 20.5
+
+start time: 5:04:05
+end time : 7:18:27
+8,062 sec
+392 images
+avg 20.5
+
+
+total time : 33776
+avg batch 1 : 22.7
+
+---------------------------------------------------
+
+automation anywhere doctr batch 2
+
+starttime: 7:39:58
+end time : 4:11:22
+30684 sec
+1486 images
+
+avg batch 2: 20.6
+
+----------------------------------------------------
+
+automation anywhere tesseract batch 1
+
+start time : 4:55:56
+end time :  0:44:24
+28,108 sec
+1449 images
+avg batch 1 : 19.1
+
+
+----------------------------------------------------
+
+automation anywhere tesseract batch 2
+
+start time :  3:18:19
+end time :  10:53:43
+
+avg for batch : 18.3505708529
+
+
+-----------------------------------------------------
+
+python: doctr 
+
+time : 5081
+images 500
+10.16 sec
+
+python : paddleOCR
+
+time : 4972
+images : 500
+9.94 sec
+
+uipath : doctr
+
+start time : 17:17:20
+end time : 19:36:49
+16.7
+
+uipath : paddle
+start time : 19:50:38
+end time : 22:10:54
+16.8
+
+automation anywhere : paddle
+18.52
+
+automation anywhere : doctr
+18.65
+
