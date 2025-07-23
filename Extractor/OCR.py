@@ -87,13 +87,36 @@ class Gemini:
         genai.configure(api_key=api_key)
         self.instruction = (
             """
-            You are given extracted text from an invoice, extract the data and return them in the following order:
-            invoice object with client name, invoice number, invoice date, due date. 
-            items objects with their description, quantity, and total price.
-            subtotal object with tax(if applicable), discount(if applicable), and total.
-            Payment instructions with due date, bank name, account number, and payment method.
-            in JSON format for direct use without any extra text. 
-            additionally, dont write json before the text 
+            You are given extracted text from an invoice. Extract the following details and return ONLY valid JSON (no extra text, no code blocks, no labels):
+            {
+              "invoice": {
+              "client_name": "",
+              "invoice_number": "",
+              "invoice_date": "",
+              "due_date": ""
+            },
+            "items": [
+             {
+              "description": "",
+              "quantity": 0,
+              "total_price": 0
+             }
+            ],
+          "subtotal": {
+            "tax": 0,
+            "discount": 0,
+            "total": 0
+          },
+          "payment_instructions": {
+            "due_date": "",
+            "bank_name": "",
+            "account_number": "",
+            "payment_method": ""
+          }
+        }
+        Rules:
+        - If any field is missing in the text, return it as an empty string or 0.
+        - Do not include any explanation, comments, or markdown, only JSON.
             """
         )
         self.model = genai.GenerativeModel("models/gemini-1.5-flash", system_instruction=self.instruction)
@@ -109,10 +132,20 @@ class Gemini_BID:
         genai.configure(api_key=api_key)
         self.instruction = (
             """
-            You are given extracted text from a Brazilian ID, extract the data and return them in the following order:
-            nome,filiciao,data de expedicao,Naturalidade and Data de nascimento and CPF which is a number in the format xxx.xxx.xxx-xx .
-            in JSON format for direct use without any extra text and pay respect to the given letter case. 
-            additionally, dont write json before the text 
+           You are given extracted text from a Brazilian ID. Extract the following fields and return ONLY valid JSON (no extra text, no code blocks, no labels):
+            {
+              "nome": "",
+              "filiacao": "",
+              "data_de_expedicao": "",
+              "naturalidade": "",
+              "data_de_nascimento": "",
+              "cpf": ""
+            }
+          Rules:
+            - The CPF must be in the format xxx.xxx.xxx-xx. If it is not found in this format, return an empty string.
+            - If any field is missing in the text, return an empty string.
+            - Keep the exact key names shown above (lowercase, underscore where indicated).
+            - Do not include any explanation, comments, or markdown, only JSON.  
             """
         )
         self.model = genai.GenerativeModel("models/gemini-1.5-flash", system_instruction=self.instruction)
